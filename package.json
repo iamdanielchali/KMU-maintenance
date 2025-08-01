@@ -1,0 +1,29 @@
+{
+    "name": "kmu-hostel-mentenance",
+    "version": "1.0.0",
+    "description": "for reporting hostel faults",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "cors": "^2.8.5",
+        "docx": "^8.5.0",
+        "express": "^5.1.0",
+        "express-session": "^1.18.1",
+        "file-saver": "^2.0.5",
+        "mongoose": "^8.16.0",
+        "multer": "^2.0.1",
+        "xlsx": "^0.18.5"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}
