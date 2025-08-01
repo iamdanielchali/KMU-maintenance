@@ -22,7 +22,7 @@ npm install
 **Option A: Create .env file (Recommended)**
 ```bash
 # Create .env file in the project root
-echo MONGODB_URI=mongodb+srv://dredlabs:DredLabs2025.@cluster0.ch6yqlc.mongodb.net/kmu_maintenance?retryWrites=true&w=majority&appName=Cluster0 > .env
+echo  .env
 ```
 
 **Option B: Use the provided batch file (Windows)**
@@ -33,10 +33,10 @@ start-server.bat
 **Option C: Set environment variable manually**
 ```bash
 # Windows
-set MONGODB_URI=mongodb+srv://dredlabs:DredLabs2025.@cluster0.ch6yqlc.mongodb.net/kmu_maintenance?retryWrites=true&w=majority&appName=Cluster0
+set MONGODB_URI=mongodb+srv://
 
 # Linux/Mac
-export MONGODB_URI=mongodb+srv://dredlabs:DredLabs2025.@cluster0.ch6yqlc.mongodb.net/kmu_maintenance?retryWrites=true&w=majority&appName=Cluster0
+export MONGODB_URI=mongodb+srv://d
 ```
 
 ### 3. Start the Server
