@@ -12,7 +12,8 @@ yarn-error.log*
 .env.production.local
 
 # Uploads
-uploads/
+uploads/*
+!uploads/.gitkeep
 *.png
 *.jpg
 *.jpeg
