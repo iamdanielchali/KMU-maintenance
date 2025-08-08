@@ -1,8 +1,9 @@
 services:
   - type: web
-    name: kmu-hostel-maintenance
+    name: kmu-maintenance-backend
     env: node
     plan: free
+    rootDir: backend
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -12,5 +13,7 @@ services:
         sync: false
       - key: SESSION_SECRET
         generateValue: true
-    healthCheckPath: /
-    autoDeploy: true 
+      - key: FRONTEND_URL
+        value: https://your-frontend.onrender.com
+    healthCheckPath: /api/health
+    autoDeploy: true

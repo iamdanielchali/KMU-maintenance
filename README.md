@@ -1,189 +1,222 @@
 # KMU Hostel Maintenance System
 
-A web-based maintenance request system for KMU hostels, built with Node.js, Express, and MongoDB.
+A modern, full-stack maintenance request system for KMU hostels with separated frontend and backend.
 
-## Features
+## 🏗️ Architecture
 
-- **Student Portal**: Submit maintenance requests with images
-- **Admin Dashboard**: Manage and track maintenance requests
-- **Real-time Status Updates**: Track request progress
-- **File Upload**: Attach images to maintenance requests
-- **Export Functionality**: Export reports to Excel/Word
+```
+kmu-maintenance/
+├── frontend/          # Next.js React Frontend
+│   ├── app/          # Next.js App Router
+│   ├── public/       # Static files
+│   └── package.json  # Frontend dependencies
+├── backend/          # Express.js Backend API
+│   ├── server.js     # Main server file
+│   ├── uploads/      # File uploads
+│   └── package.json  # Backend dependencies
+└── README.md         # This file
+```
 
-## Quick Start
+## 🚀 Quick Start
 
-### 1. Install Dependencies
+### Prerequisites
+- Node.js 18+ 
+- MongoDB Atlas account
+- Your existing `.env` file with MongoDB connection
+
+### 1. Setup Backend
 ```bash
+cd backend
+
+# Copy your existing .env file
+cp ../.env .env
+
+# Install dependencies
 npm install
+
+# Create uploads directory
+mkdir uploads
+
+# Start backend server
+npm run dev
 ```
 
-### 2. Set Environment Variables
-
-**Option A: Create .env file (Recommended)**
+### 2. Setup Frontend
 ```bash
-# Create .env file in the project root
-echo  .env
+cd frontend
+
+# Copy environment file
+cp env.example .env.local
+
+# Install dependencies
+npm install
+
+# Start frontend server
+npm run dev
 ```
 
-**Option B: Use the provided batch file (Windows)**
+### 3. Create Admin Account
 ```bash
-start-server.bat
+cd backend
+npm run setup-admin
 ```
 
-**Option C: Set environment variable manually**
+## 📁 Project Structure
+
+### Backend (`/backend`)
+- **Express.js API** with MongoDB
+- **File upload handling** with Multer
+- **Session management** with Express Session
+- **Excel export** functionality
+- **CORS** configured for frontend
+
+### Frontend (`/frontend`)
+- **Next.js 14** with App Router
+- **React 18** with hooks
+- **Tailwind CSS** for styling
+- **Form handling** with React Hook Form
+- **API proxy** to backend
+
+## 🔧 Environment Variables
+
+### Backend (`.env`)
 ```bash
-# Windows
-set MONGODB_URI=mongodb+srv://
-
-# Linux/Mac
-export MONGODB_URI=mongodb+srv://d
+MONGODB_URI=mongodb+srv://your-connection-string
+PORT=5000
+SESSION_SECRET=your-session-secret
+FRONTEND_URL=http://localhost:3000
+NODE_ENV=development
 ```
 
-### 3. Start the Server
+### Frontend (`.env.local`)
 ```bash
-node server.js
+BACKEND_URL=http://localhost:5000
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-session-secret
+NODE_ENV=development
 ```
 
-The application will start on `http://localhost:3000`
+## 🌐 API Endpoints
 
-## Database Setup
+### Reports
+- `POST /api/reports` - Submit maintenance request
+- `GET /api/reports` - Get all reports (admin only)
+- `PATCH /api/reports/:id/status` - Update status (admin only)
+- `DELETE /api/reports/:id` - Delete report (admin only)
+- `GET /api/reports/export` - Export to Excel (admin only)
 
-### MongoDB Atlas (Required)
+### Admin
+- `POST /api/admin/login` - Admin authentication
+- `POST /api/admin/create` - Create admin account
+- `POST /api/admin/logout` - Logout
 
-1. **Create MongoDB Atlas Account**
-   - Go to [MongoDB Atlas](https://www.mongodb.com/atlas)
-   - Create a free account and cluster
+### Health
+- `GET /api/health` - Health check
 
-2. **Get Connection String**
-   - In your Atlas dashboard, click "Connect"
-   - Choose "Connect your application"
-   - Copy the connection string
+## 🚀 Development
 
-3. **Set Environment Variable**
-   ```bash
-   # Windows
-   set MONGODB_URI=your_connection_string_here
-   
-   # Linux/Mac
-   export MONGODB_URI=your_connection_string_here
-   ```
-
-4. **Or Create .env File**
-   ```bash
-   # Copy the example
-   cp env.example .env
-   
-   # Edit .env file with your connection string
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database_name?retryWrites=true&w=majority
-   ```
-
-### Fallback: In-Memory Mode
-
-If `MONGODB_URI` is not set, the app will automatically run in in-memory mode. Data will be lost on server restart.
-
-## Admin Setup
-
-### For MongoDB Atlas:
+### Backend Development
 ```bash
-node setup-admin.js
+cd backend
+npm run dev  # Uses nodemon for auto-restart
 ```
-Follow the prompts to create your admin account.
 
-### For In-Memory Mode:
-Default admin is automatically created:
-- **Username**: `admin`
-- **Password**: `admin123`
+### Frontend Development
+```bash
+cd frontend
+npm run dev  # Next.js development server
+```
 
-## Access Points
+### Both Servers
+```bash
+# Terminal 1 - Backend
+cd backend && npm run dev
 
-- **Main Form**: `http://localhost:3000/`
+# Terminal 2 - Frontend  
+cd frontend && npm run dev
+```
+
+## 📱 Access Points
+
+- **Frontend**: `http://localhost:3000`
+- **Backend API**: `http://localhost:5000`
+- **Health Check**: `http://localhost:5000/api/health`
 - **Admin Login**: `http://localhost:3000/admin/login`
-- **Admin Dashboard**: `http://localhost:3000/admin/dashboard`
 
-## Environment Variables
+## 🔒 Security Features
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `MONGODB_URI` | MongoDB Atlas connection string | Placeholder string |
-| `PORT` | Server port | 3000 |
+- **CORS** protection between frontend/backend
+- **Session-based** authentication
+- **Password hashing** with bcrypt
+- **File upload** validation
+- **Input validation** on both ends
 
-## File Structure
+## 📦 Deployment
 
-```
-kmu-hostel-mentenance/
-├── public/                 # Frontend files
-│   ├── index.html         # Main form
-│   ├── admin-login.html   # Admin login
-│   ├── warden.html        # Admin dashboard
-│   └── assets/            # Images, CSS, JS
-├── uploads/               # Uploaded images
-├── config/                # Configuration files
-├── server.js              # Main server file
-├── setup-admin.js         # Admin setup script
-└── package.json           # Dependencies
+### Backend Deployment (Render/Railway/Heroku)
+```bash
+cd backend
+# Set environment variables
+# Deploy with your platform
 ```
 
-## Security Notes
-
-- ✅ **No hardcoded credentials** - Admin accounts are created dynamically
-- ✅ **Password hashing** - All passwords are bcrypt hashed
-- ✅ **Session management** - Secure session handling
-- ✅ **Input validation** - Server-side validation
-
-## Troubleshooting
-
-### MongoDB Connection Issues
-1. Check your connection string format
-2. Ensure your IP is whitelisted in Atlas
-3. Verify username/password in connection string
-
-### Admin Login Issues
-1. For Atlas: Run `node setup-admin.js`
-2. For in-memory: Use default `admin`/`admin123`
-
-### Port Already in Use
-Change the port in `server.js`:
-```javascript
-const PORT = 3001; // or any available port
+### Frontend Deployment (Vercel/Netlify)
+```bash
+cd frontend
+# Set environment variables
+# Deploy with your platform
 ```
 
-## Development
+### Environment Variables for Production
 
-### Adding New Features
-1. Update server routes in `server.js`
-2. Modify frontend files in `public/`
-3. Test both MongoDB and in-memory modes
+**Backend:**
+```bash
+MONGODB_URI=your_production_mongodb_uri
+PORT=5000
+SESSION_SECRET=your_production_secret
+FRONTEND_URL=https://your-frontend-domain.com
+NODE_ENV=production
+```
 
-### Database Schema
-- **Reports**: Maintenance requests with status tracking
-- **Admins**: User accounts for dashboard access
+**Frontend:**
+```bash
+BACKEND_URL=https://your-backend-domain.com
+NEXTAUTH_URL=https://your-frontend-domain.com
+NEXTAUTH_SECRET=your_production_secret
+NODE_ENV=production
+```
 
-## License
+## 🐛 Troubleshooting
 
-This project is for KMU hostel maintenance management.
+### Common Issues
 
-## Deployment
+1. **CORS Errors**
+   - Check `FRONTEND_URL` in backend `.env`
+   - Ensure frontend URL matches exactly
 
-### Render Hosting (Recommended)
+2. **Database Connection**
+   - Verify `MONGODB_URI` in backend `.env`
+   - Check MongoDB Atlas network access
 
-This application is ready for deployment on Render. See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for detailed instructions.
+3. **File Uploads**
+   - Ensure `uploads/` directory exists in backend
+   - Check file permissions
 
-**Quick Deploy Steps:**
-1. Push your code to GitHub
-2. Connect your repository to Render
-3. Set environment variables in Render dashboard
-4. Deploy automatically
+4. **API Proxy Issues**
+   - Verify `BACKEND_URL` in frontend `.env.local`
+   - Check if backend is running on correct port
 
-**Required Environment Variables:**
-- `MONGODB_URI` - Your MongoDB Atlas connection string
-- `NODE_ENV` - Set to `production`
-- `SESSION_SECRET` - A secure session secret
+### Development Tips
 
-**Render URL:** `https://your-app-name.onrender.com`
+- Use browser dev tools to check API calls
+- Monitor backend console for errors
+- Check network tab for failed requests
+- Use Postman to test API endpoints directly
 
-### Other Hosting Options
+## 📄 License
 
-- **Heroku**: Similar to Render, supports Node.js
-- **Vercel**: Good for static sites, limited for full-stack
-- **Railway**: Alternative to Render
-- **DigitalOcean**: VPS hosting with more control
+This project is licensed under the MIT License.
+
+---
+
+**Built with ❤️ for KMU Hostel Management**
